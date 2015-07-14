@@ -7437,7 +7437,7 @@ function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
 		case 'e': o.t = "e"; break;
 		default:
 			if(opts.bookSST) {
-				v = writetag('v', ''+get_sst_id(opts.Strings, cell.v));
+				v = writetag('v', ''+get_sst_id(opts.Strings, cell));
 				o.t = "s"; break;
 			}
 			o.t = "str"; break;
@@ -7949,7 +7949,7 @@ function write_ws_bin_cell(ba, cell, R, C, opts) {
 	switch(cell.t) {
 		case 's': case 'str':
 			if(opts.bookSST) {
-				vv = get_sst_id(opts.Strings, cell.v);
+				vv = get_sst_id(opts.Strings, cell);
 				o.t = "s"; break;
 			}
 			o.t = "str"; break;
