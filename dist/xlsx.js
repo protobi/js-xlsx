@@ -7209,10 +7209,31 @@ var _ssfopts = {}; // spreadsheet formatting options
 
 RELS.WS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet";
 
-function get_sst_id(sst, str) {
-	for(var i = 0, len = sst.length; i < len; ++i) if(sst[i].t === str) { sst.Count ++; return i; }
-	sst[len] = {t:str}; sst.Count ++; sst.Unique ++; return len;
-}
+function get_sst_id(sst, cell) {
+	var i, len;
+	i = 0;
+	len = sst.length;
+	while (i < len) {
+		if (sst[i].t === cell.v) {
+			sst.Count++;
+			return i;
+		}
+		++i;
+	}
+	if (cell.r && cell.r !== '') {
+		sst[len] = {
+			t: cell.v,
+			r: cell.r
+		};
+	} else {
+		sst[len] = {
+			t: cell.v
+		};
+	}
+	sst.Count++;
+	sst.Unique++;
+	return len;
+};
 
 function get_cell_style(styles, cell, opts) {
 	var z = opts.revssf[cell.z != null ? cell.z : "General"];
