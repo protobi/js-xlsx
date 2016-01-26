@@ -54,6 +54,7 @@ function rgb_tint(hex, tint) {
 var DEF_MDW = 7, MAX_MDW = 15, MIN_MDW = 1, MDW = DEF_MDW;
 function width2px(width) { return (( width + ((128/MDW)|0)/256 )* MDW )|0; }
 function px2char(px) { return (((px - 5)/MDW * 100 + 0.5)|0)/100; }
+function px2pt(px) { return px * 72 / 96; }
 function char2width(chr) { return (((chr * MDW + 5)/MDW*256)|0)/256; }
 function cycle_width(collw) { return char2width(px2char(width2px(collw))); }
 function find_mdw(collw, coll) {
@@ -82,4 +83,3 @@ var XLMLPatternTypeMap = {
 	"ThinReverseDiagStripe": "lightDown",
 	"ThinHorzCross": "lightGrid"
 };
-
