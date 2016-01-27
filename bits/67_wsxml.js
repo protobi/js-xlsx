@@ -77,20 +77,20 @@ function write_ws_xml_pagesetup(setup) {
     horizontalDpi : setup.horizontalDpi || '4294967292',
     verticalDpi : setup.verticalDpi || '4294967292'
   })
-  console.log(pageSetup);
   return pageSetup;
 }
 
-//<pageSetup scale="90" orientation="portrait" horizontalDpi="4294967292" verticalDpi="4294967292"/>
-//<rowBreaks count="1" manualBreakCount="1">
-// <brk id="8" max="16383" man="1"/>
-//</rowBreaks>
-//<colBreaks count="1" manualBreakCount="1">
-//    <brk id="8" max="1048575" man="1"/>
-//</colBreaks>
-
-
-
+function write_ws_xml_pagemargins(margin) {
+    var pageMargins =  writextag('pageMargins', null, {
+        left:   margin.left   === undefined ? '0.70866141732283472' : margin.left,
+        right:  margin.right  === undefined ? '0.70866141732283472' : margin.right,
+        top:    margin.top    === undefined ? '0.74803149606299213' : margin.top,
+        bottom: margin.bottom === undefined ? '0.74803149606299213' : margin.bottom,
+        header: margin.header === undefined ? '0.31496062992125984' : margin.header,
+        footer: margin.footer === undefined ? '0.31496062992125984' : margin.footer,
+    })
+    return pageMargins;
+}
 
 function parse_ws_xml_hlinks(s, data, rels) {
 	for(var i = 0; i != data.length; ++i) {
@@ -333,7 +333,11 @@ function write_ws_xml(idx, opts, wb) {
   var sheetView = writextag('sheetView', null,  {
     showGridLines: opts.showGridLines == false ? '0' : '1',
     tabSelected: opts.tabSelected === undefined ? '1' :  opts.tabSelected,
-    workbookViewId: opts.workbookViewId === undefined ? '0' : opts.workbookViewId
+    workbookViewId: opts.workbookViewId === undefined ? '0' : opts.workbookViewId,
+    view: opts.view === undefined ? 'normal' : opts.view,
+    zoomScale: opts.zoomScale === undefined ? '100' : opts.zoomScale,
+    zoomScaleNormal: opts.zoomScaleNormal === undefined ? '100' : opts.zoomScaleNormal,
+    zoomScalePageLayoutView: opts.zoomScalePageLayoutView === undefined ? '100' : opts.zoomScalePageLayoutView,
   });
   o[o.length] = writextag('sheetViews', sheetView);
 
@@ -347,6 +351,7 @@ function write_ws_xml(idx, opts, wb) {
 
 	if(ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
 
+    if (ws['!pageMargins'] !== undefined) o[o.length] =  write_ws_xml_pagemargins(ws['!pageMargins'])
   if (ws['!pageSetup'] !== undefined) o[o.length] =  write_ws_xml_pagesetup(ws['!pageSetup'])
   if (ws['!rowBreaks'] !== undefined) o[o.length] =  write_ws_xml_row_breaks(ws['!rowBreaks'])
   if (ws['!colBreaks'] !== undefined) o[o.length] =  write_ws_xml_col_breaks(ws['!colBreaks'])
