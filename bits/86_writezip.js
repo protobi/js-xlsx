@@ -22,7 +22,7 @@ function write_zip(wb, opts) {
 	var wbext = opts.bookType == "xlsb" ? "bin" : "xml";
 	var ct = { workbooks: [], sheets: [], calcchains: [], themes: [], styles: [],
 		coreprops: [], extprops: [], custprops: [], strs:[], comments: [], vba: [],
-		TODO:[], rels:[], xmlns: "" };
+		TODO:[], rels:[], xmlns: "", drawings: [] };
 	fix_write_opts(opts = opts || {});
 	var zip = new jszip();
 	var f = "", rId = 0;
@@ -49,6 +49,21 @@ function write_zip(wb, opts) {
 		ct.custprops.push(f);
 		add_rels(opts.rels, 4, f, RELS.CUST_PROPS);
 	}
+    
+    if(typeof wb.Images == 'object' && wb.Images instanceof Array) {
+        for(var imgId = 0, len = wb.Images.length; imgId < len; ++imgId) {
+            zip.file('xl/media/image' + (imgId + 1) + '.' + wb.Images[imgId].type, wb.Images[imgId].data, {base64: true});
+        }
+    }
+    
+    if(typeof wb.Drawings == 'object' && wb.Drawings instanceof Array) {
+        for(var drawId = 0, len = wb.Drawings.length; drawId < len; ++drawId) {
+            f = 'xl/drawings/drawing' + (drawId + 1) + '.xml';
+            zip.file(f, write_drawing(wb.Drawings[drawId]));
+            zip.file('xl/drawings/_rels/drawing' + (drawId + 1) + '.xml.rels', write_drawing_rels(wb, wb.Drawings[drawId]));
+            ct.drawings.push(f);
+        }
+    }
 
 	f = "xl/workbook." + wbext;
 	zip.file(f, write_wb(wb, f, opts));
@@ -60,6 +75,16 @@ function write_zip(wb, opts) {
 		zip.file(f, write_ws(rId-1, f, opts, wb));
 		ct.sheets.push(f);
 		add_rels(opts.wbrels, rId, "worksheets/sheet" + rId + "." + wbext, RELS.WS);
+        var ws = wb.Sheets[wb.SheetNames[rId-1]];
+        var wsrels = {};
+        if(ws['!drawing'] != undefined)
+        {
+            add_rels(wsrels, 1, '../drawings/drawing'+(ws['!drawing']+1)+'.xml', RELS.DRAWING);
+        }
+        if(Object.keys(wsrels).length > 0)
+        {
+            zip.file('xl/worksheets/_rels/sheet' + rId + '.xml.rels', write_rels(wsrels));
+        }
 	}
 
 	if(opts.Strings != null && opts.Strings.length > 0) {
@@ -72,7 +97,7 @@ function write_zip(wb, opts) {
 	/* TODO: something more intelligent with themes */
 
 	f = "xl/theme/theme1.xml";
-  zip.file(f, write_theme(opts));
+	zip.file(f, write_theme(opts));
 	ct.themes.push(f);
 	add_rels(opts.wbrels, ++rId, "theme/theme1.xml", RELS.THEME);
 

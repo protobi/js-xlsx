@@ -330,16 +330,16 @@ function write_ws_xml(idx, opts, wb) {
 	var ref = ws['!ref']; if(ref === undefined) ref = 'A1';
 	o[o.length] = (writextag('dimension', null, {'ref': ref}));
 
-  var sheetView = writextag('sheetView', null,  {
-    showGridLines: opts.showGridLines == false ? '0' : '1',
-    tabSelected: opts.tabSelected === undefined ? '1' :  opts.tabSelected,
-    workbookViewId: opts.workbookViewId === undefined ? '0' : opts.workbookViewId,
-    view: opts.view === undefined ? 'normal' : opts.view,
-    zoomScale: opts.zoomScale === undefined ? '100' : opts.zoomScale,
-    zoomScaleNormal: opts.zoomScaleNormal === undefined ? '100' : opts.zoomScaleNormal,
-    zoomScalePageLayoutView: opts.zoomScalePageLayoutView === undefined ? '100' : opts.zoomScalePageLayoutView,
-  });
-  o[o.length] = writextag('sheetViews', sheetView);
+    var sheetView = writextag('sheetView', null, {
+        showGridLines: opts.showGridLines == false ? '0' : '1',
+        tabSelected: opts.tabSelected === undefined ? '1' :  opts.tabSelected,
+        workbookViewId: opts.workbookViewId === undefined ? '0' : opts.workbookViewId,
+        view: opts.view === undefined ? 'normal' : opts.view,
+        zoomScale: opts.zoomScale === undefined ? '100' : opts.zoomScale,
+        zoomScaleNormal: opts.zoomScaleNormal === undefined ? '100' : opts.zoomScaleNormal,
+        zoomScalePageLayoutView: opts.zoomScalePageLayoutView === undefined ? '100' : opts.zoomScalePageLayoutView,
+    });
+    o[o.length] = writextag('sheetViews', sheetView);
 
 	if(ws['!cols'] !== undefined && ws['!cols'].length > 0) o[o.length] = (write_ws_xml_cols(ws, ws['!cols']));
 	o[sidx = o.length] = '<sheetData/>';
@@ -351,11 +351,11 @@ function write_ws_xml(idx, opts, wb) {
 
 	if(ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
 
-    if (ws['!pageMargins'] !== undefined) o[o.length] =  write_ws_xml_pagemargins(ws['!pageMargins'])
-  if (ws['!pageSetup'] !== undefined) o[o.length] =  write_ws_xml_pagesetup(ws['!pageSetup'])
-  if (ws['!rowBreaks'] !== undefined) o[o.length] =  write_ws_xml_row_breaks(ws['!rowBreaks'])
-  if (ws['!colBreaks'] !== undefined) o[o.length] =  write_ws_xml_col_breaks(ws['!colBreaks'])
-
+    if(ws['!pageMargins'] !== undefined) o[o.length] = write_ws_xml_pagemargins(ws['!pageMargins']);
+    if(ws['!pageSetup']   !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
+    if(ws['!rowBreaks']   !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
+    if(ws['!colBreaks']   !== undefined) o[o.length] = write_ws_xml_col_breaks(ws['!colBreaks']);
+    if(ws['!drawing']     !== undefined) o[o.length] = '<drawing r:id="rId'+(ws['!drawing']+1)+'"/>';
 
 	if(o.length>2) { o[o.length] = ('</worksheet>'); o[1]=o[1].replace("/>",">"); }
 	return o.join("");
