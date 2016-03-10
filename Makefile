@@ -98,6 +98,10 @@ dist: dist-deps $(TARGET) bower.json
 	uglifyjs $(REQS) $(ADDONS) $(TARGET) -o dist/$(LIB).full.min.js --source-map dist/$(LIB).full.min.map --preamble "$$(head -n 1 bits/00_header.js)"
 	misc/strip_sourcemap.sh dist/$(LIB).full.min.js
 
+.PHONY: clean-dist
+clean-dist:
+	rm -f dist/*
+
 .PHONY: aux
 aux: $(AUXTARGETS)
 
