@@ -4,7 +4,7 @@
 /*jshint funcscope:true, eqnull:true */
 var XLSX = {};
 (function make_xlsx(XLSX){
-XLSX.version = '0.8.13';
+XLSX.version = '0.8.14';
 var current_codepage = 1200, current_cptable;
 if(typeof module !== "undefined" && typeof require !== 'undefined') {
 	if(typeof cptable === 'undefined') cptable = require('./dist/cpexcel');
@@ -1314,8 +1314,14 @@ function getdata(data) {
 
 function safegetzipfile(zip, file) {
 	var f = file; if(zip.files[f]) return zip.files[f];
-	f = file.toLowerCase(); if(zip.files[f]) return zip.files[f];
-	f = f.replace(/\//g,'\\'); if(zip.files[f]) return zip.files[f];
+
+	var lowerCaseFiles = {};
+	for (var key in zip.files) {
+		lowerCaseFiles[key.toLowerCase()] = zip.files[key];
+	}
+
+	f = file.toLowerCase(); if(lowerCaseFiles[f]) return lowerCaseFiles[f];
+	f = f.replace(/\//g,'\\'); if(lowerCaseFiles[f]) return lowerCaseFiles[f];
 	return null;
 }
 
@@ -4267,15 +4273,15 @@ var parse_rs = (function parse_rs_factory() {
 })();
 
 /* 18.4.8 si CT_Rst */
-var sitregex = /<t[^>]*>([^<]*)<\/t>/g, sirregex = /<r>/;
+var sitregex = /<(?:\w+:)?t[^>]*>([^<]*)<\/(?:\w+:)?t>/g, sirregex = /<(?:\w+:)?r>/;
 function parse_si(x, opts) {
 	var html = opts ? opts.cellHTML : true;
 	var z = {};
 	if(!x) return null;
 	var y;
 	/* 18.4.12 t ST_Xstring (Plaintext String) */
-	if(x.charCodeAt(1) === 116) {
-		z.t = utf8read(unescapexml(x.substr(x.indexOf(">")+1).split(/<\/t>/)[0]));
+	if(/^<(?:\w+:)?t/.test(x)) {
+		z.t = utf8read(unescapexml(x.substr(x.indexOf(">")+1).split(/<\/(?:\w+:)?t>/)[0]));
 		z.r = x;
 		if(html) z.h = z.t;
 	}
@@ -4291,9 +4297,9 @@ function parse_si(x, opts) {
 }
 
 /* 18.4 Shared String Table */
-var sstr0 = /<sst([^>]*)>([\s\S]*)<\/sst>/;
-var sstr1 = /<(?:si|sstItem)>/g;
-var sstr2 = /<\/(?:si|sstItem)>/;
+var sstr0 = /<(?:\w+:)?sst([^>]*)>([\s\S]*)<\/(?:\w+:)?sst>/;
+var sstr1 = /<(?:\w+:)?(?:si|sstItem)>/g;
+var sstr2 = /<\/(?:\w+:)?(?:si|sstItem)>/;
 function parse_sst_xml(data, opts) {
 	var s = [], ss;
 	/* 18.4.9 sst CT_Sst */
