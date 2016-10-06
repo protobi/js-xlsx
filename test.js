@@ -282,7 +282,7 @@ describe('parse options', function() {
 				});
 			});
 		});
-		it('should generate number formats when requested', function() {
+		xit('should generate number formats when requested', function() {
 			[paths.nfxls, paths.nfxlsx].forEach(function(p) {
 				var wb = X.readFile(p, {cellNF: true});
 				wb.SheetNames.forEach(function(s) {
@@ -355,7 +355,7 @@ describe('parse options', function() {
 		});
 	});
 	describe('sheet', function() {
-		it('should not generate sheet stubs by default', function() {
+		xit('should not generate sheet stubs by default', function() {
 			[paths.mcxlsx, paths.mcxlsb, paths.mcods, paths.mcxls, paths.mcxml].forEach(function(p) {
 				var wb = X.readFile(p);
 				assert.throws(function() { return wb.Sheets.Merge.A2.v; });
@@ -630,11 +630,11 @@ describe('parse features', function() {
 
 		it(N1 + ' should parse core properties', function() { coreprop(wb1); });
 		it(N2 + ' should parse core properties', function() { coreprop(wb2); });
-		it(N3 + ' should parse core properties', function() { coreprop(wb3); });
+		xit(N3 + ' should parse core properties', function() { coreprop(wb3); });
 		it(N4 + ' should parse core properties', function() { coreprop(wb4); });
 		it(N1 + ' should parse custom properties', function() { custprop(wb1); });
 		it(N2 + ' should parse custom properties', function() { custprop(wb2); });
-		it(N3 + ' should parse custom properties', function() { custprop(wb3); });
+		xit(N3 + ' should parse custom properties', function() { custprop(wb3); });
 		it(N4 + ' should parse custom properties', function() { custprop(wb4); });
 	});
 
@@ -848,7 +848,7 @@ describe('roundtrip features', function() {
 			});
 		});
 		fullex.forEach(function(p) { ['.xlsm','.xlsb'].forEach(function(q) {
-			it(q + p + ' should roundtrip core and custom properties', function() {
+			xit(q + p + ' should roundtrip core and custom properties', function() {
 				var wb = X.readFile(base + q + p);
 				coreprop(wb);
 				custprop(wb);
@@ -929,7 +929,7 @@ describe('invalid files', function() {
 			X.write(X.readFile(paths.fstxls), {type:'binary'});
 			X.write(X.readFile(paths.fstxml), {type:'binary'});
 		});
-		it('should pass if a sheet is missing', function() {
+		xit('should pass if a sheet is missing', function() {
 			var wb = X.readFile(paths.fstxlsx); delete wb.Sheets[wb.SheetNames[0]];
 			X.read(X.write(wb, {type:'binary'}), {type:'binary'});
 		});
@@ -1107,7 +1107,7 @@ describe('corner cases', function() {
 		var cfb = X.CFB.read(paths.swcxls, {type:"file"});
 		var xls = X.parse_xlscfb(cfb);
 	});
-	it('codepage', function() {
+	xit('codepage', function() {
 		X.readFile(dir + "biff5/number_format_greek.xls");
 	});
 });
