@@ -315,6 +315,10 @@ function write_ws_xml(idx, opts, wb) {
   });
   o[o.length] = writextag('sheetViews', sheetView);
 
+  o[o.length] = writextag('sheetFormatPr', null, {
+    defaultRowHeight: (opts.sheetFormat && opts.sheetFormat.defaultRowHeight) || '13.5',
+  });
+
 	if(ws['!cols'] !== undefined && ws['!cols'].length > 0) o[o.length] = (write_ws_xml_cols(ws, ws['!cols']));
 	o[sidx = o.length] = '<sheetData/>';
 	if(ws['!ref'] !== undefined) {
