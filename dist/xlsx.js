@@ -7451,10 +7451,31 @@ var _ssfopts = {}; // spreadsheet formatting options
 
 RELS.WS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet";
 
-function get_sst_id(sst, str) {
-	for(var i = 0, len = sst.length; i < len; ++i) if(sst[i].t === str) { sst.Count ++; return i; }
-	sst[len] = {t:str}; sst.Count ++; sst.Unique ++; return len;
-}
+function get_sst_id(sst, cell) {
+	var i, len;
+	i = 0;
+	len = sst.length;
+	while (i < len) {
+		if (sst[i].t === cell.v) {
+			sst.Count++;
+			return i;
+		}
+		++i;
+	}
+	if (cell.r && cell.r !== '') {
+		sst[len] = {
+			t: cell.v,
+			r: cell.r
+		};
+	} else {
+		sst[len] = {
+			t: cell.v
+		};
+	}
+	sst.Count++;
+	sst.Unique++;
+	return len;
+};
 
 function get_cell_style(styles, cell, opts) {
   if (typeof style_builder != 'undefined') {
@@ -7697,7 +7718,7 @@ function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
 		case 'e': o.t = "e"; break;
 		default:
 			if(opts.bookSST) {
-				v = writetag('v', ''+get_sst_id(opts.Strings, cell.v));
+				v = writetag('v', ''+get_sst_id(opts.Strings, cell));
 				o.t = "s"; break;
 			}
 			o.t = "str"; break;
@@ -8248,7 +8269,7 @@ function write_ws_bin_cell(ba, cell, R, C, opts) {
 	switch(cell.t) {
 		case 's': case 'str':
 			if(opts.bookSST) {
-				vv = get_sst_id(opts.Strings, cell.v);
+				vv = get_sst_id(opts.Strings, cell);
 				o.t = "s"; break;
 			}
 			o.t = "str"; break;
