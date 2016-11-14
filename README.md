@@ -436,7 +436,17 @@ The following properties are currently used when generating an XLSX file, but no
 
 - `ws['!rowBreaks']`: array of row break points, e.g. `[16,32]`
 - `ws['!colBreaks']`: array of col break points, e.g. `[8,16]`
-- `ws['!pageSetup']`: `{scale: '100', orientation: 'portrait'||'landscape'}
+- `ws['!pageSetup']`: `{scale: '100', orientation: 'portrait'||'landscape'}`
+
+- `ws['!viewPane']`: object representing Worksheet View pane
+
+| Property Name | Default   | Description |
+| :------------ | --------: | :---------- |
+| state         | 'split'   | Type of pane: 'split' \|\| 'frozen' \|\| 'frozenSplit' |
+| xSplit        | 0         | For 'split', horizontal position of the splitter, in 1/20th of a point. For 'frozen' and 'frozenSplit', amount of frozen columns. |
+| ySplit        | 0         | For 'split', vertical position of the splitter, in 1/20th of a point. For 'frozen' and 'frozenSplit', amount of frozen rows. |
+| topLeftCell   | special   | The cell to be top-left in the bottom-right pane. For 'frozen' and 'frozenSplit', defaults to the cell in first unfrozen column and first unfrozen row |
+| activePane    | undefined | 'topLeft' \|\| 'topRight' \|\| 'bottomLeft' \|\| 'bottomRight' \|\| |
 
 
 ### Workbook Object
