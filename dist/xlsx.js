@@ -7,7 +7,9 @@ var XLSX = {};
 XLSX.version = '0.8.3';
 var current_codepage = 1200, current_cptable;
 if(typeof module !== "undefined" && typeof require !== 'undefined') {
-	if(typeof cptable === 'undefined') cptable = System.import('./cpexcel');
+	if(typeof cptable === 'undefined') 
+		/* We don't require cpexcel , import / require cpexcel cause issue while loading with SystemJS */
+		//cptable = System.import('./cpexcel');
 	current_cptable = cptable[current_codepage];
 }
 function reset_cp() { set_cp(1200); }
