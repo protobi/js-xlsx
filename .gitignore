@@ -25,3 +25,4 @@ test_files
 example.js
 example2.js
 .idea
+.DS_Store

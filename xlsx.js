@@ -1341,9 +1341,9 @@ var _fs, jszip;
 if(typeof JSZip !== 'undefined') jszip = JSZip;
 if (typeof exports !== 'undefined') {
 	if (typeof module !== 'undefined' && module.exports) {
-		if(has_buf && typeof jszip === 'undefined') jszip = require('js'+'zip');
-		if(typeof jszip === 'undefined') jszip = require('./js'+'zip').JSZip;
-		_fs = require('f'+'s');
+		if(has_buf && typeof jszip === 'undefined') jszip = require('jszip');
+		if(typeof jszip === 'undefined') jszip = require('./jszip').JSZip;
+		_fs = require('fs');
 	}
 }
 var attregexg=/([\w:]+)=((?:")([^"]*)(?:")|(?:')([^']*)(?:'))/g;
@@ -1776,7 +1776,7 @@ var make_offcrypto = function(O, _crypto) {
 	var crypto;
 	if(typeof _crypto !== 'undefined') crypto = _crypto;
 	else if(typeof require !== 'undefined') {
-		try { crypto = require('cry'+'pto'); }
+		try { crypto = require('crypto'); }
 		catch(e) { crypto = null; }
 	}
 
@@ -11520,7 +11520,7 @@ var XLSRecordEnum = {
 
 /* Helper function to call out to ODS parser */
 function parse_ods(zip, opts) {
-	if(typeof module !== "undefined" && typeof require !== 'undefined' && typeof ODS === 'undefined') ODS = require('./od' + 's');
+	if(typeof module !== "undefined" && typeof require !== 'undefined' && typeof ODS === 'undefined') ODS = require('./ods');
 	if(typeof ODS === 'undefined' || !ODS.parse_ods) throw new Error("Unsupported ODS");
 	return ODS.parse_ods(zip, opts);
 }
