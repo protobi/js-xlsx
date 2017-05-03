@@ -82,6 +82,11 @@ function parse_fonts(t, opts) {
         break;
       case '<font':
         break;
+      case '<font/>':
+	      styles.Fonts.push(font);
+		    ;
+	      font = {};
+		    break;
       case '</font>':
         styles.Fonts.push(font);
         ;
