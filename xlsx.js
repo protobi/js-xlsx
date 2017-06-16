@@ -7573,8 +7573,10 @@ function parse_ws_xml(data, opts, rels) {
   }
 
   if (opts.cellStyles && data.indexOf("</sheetView>") !== -1) {
-	  var paneData = data.match(freezeregex);
-	  var freezeData = parse_ws_xml_pane(paneData)
+	var paneData = data.match(freezeregex);
+	if (paneData){
+	  var freezeData = parse_ws_xml_pane(paneData);
+	}
   }
 
   /* 18.3.1.17 cols CT_Cols */
