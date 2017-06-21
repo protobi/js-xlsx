@@ -7,7 +7,7 @@
 	"bin": {
 		"xlsx": "./bin/xlsx.njs"
 	},
-	"main": "./itt-xlsx",
+	"main": "./xlsx",
 	"dependencies": {
 		"ssf":"~0.8.1",
 		"codepage":"~1.3.6",
