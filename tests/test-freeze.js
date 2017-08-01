@@ -78,7 +78,14 @@ var workbook = {
       "A58": {v: "Jacksonville"},
       "A59": {v: "Jacksonville"},
       "!ref":"A1:A59",
-      "!printHeader":[1,1]
+      "!printHeader":[1,1],
+      "!freeze":{
+        xSplit: "1",
+        ySplit: "1",
+        topLeftCell: "B2",
+        activePane: "bottomRight",
+        state: "frozen",
+      }
     }
   }
 };
@@ -87,8 +94,8 @@ describe('repeats header', function () {
   it ('repeats header', function() {
 
 
-    var OUTFILE = '/tmp/header.xlsx';
-
+    var OUTFILE = '/tmp/freeze.xlsx';
+    var OUTFILE = './lab/freeze/freeze.xlsx'
 
     // write the file and read it back...
     XLSX.writeFile(workbook, OUTFILE, {bookType: 'xlsx', bookSST: false});
