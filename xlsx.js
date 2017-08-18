@@ -7989,6 +7989,8 @@ function write_ws_xml(idx, opts, wb) {
   }
 
   if (ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
+  var images = ws['!images'] || [];
+ 	if (images.length) o[o.length] = '<drawing r:id="rId1"/>';
 
   if (ws['!pageSetup'] !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
   if (ws['!rowBreaks'] !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
