@@ -2546,14 +2546,12 @@ var DRAW_ROOT = writextag('xdr:wsDr', null, {
 });
 
 function write_drawing(images) {
-  console.log("entering write_drawing");
 	var o = [];
 	o[o.length] = (XML_HEADER);
 	o[o.length] = (DRAW_ROOT);
 
 	for (var i = 0; i < images.length; i++) {
 		var image = images[i];
-    console.log("spr: ", image.spPr);
 		var pos = image.position || {};
     var skipXFrm = !image.spPr;
 		if (pos.type === 'twoCellAnchor') {
