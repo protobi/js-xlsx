@@ -2546,24 +2546,36 @@ var DRAW_ROOT = writextag('xdr:wsDr', null, {
 });
 
 function write_drawing(images) {
+  console.log("entering write_drawing");
 	var o = [];
 	o[o.length] = (XML_HEADER);
 	o[o.length] = (DRAW_ROOT);
 
 	for (var i = 0; i < images.length; i++) {
 		var image = images[i];
+    console.log("spr: ", image.spPr);
 		var pos = image.position || {};
+    var skipXFrm = !image.spPr;
 		if (pos.type === 'twoCellAnchor') {
 			var from = pos.from || {}, to = pos.to || {},
 			    fromCol = from.col || 0, toCol = to.col || 0,
-			    fromRow = from.row || 0, toRow = to.row || 0;
+			    fromRow = from.row || 0, toRow = to.row || 0,
+          fromColOff  = from.colOff || 0,
+          fromRowOff  = from.rowOff || 0,
+          toColOff    = to.colOff   || 0,
+          toRowOff    = to.rowOff   || 99999;
 
-			var twoCell = '<xdr:from><xdr:col>'+fromCol+'</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>'+fromRow+'</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>';
-			twoCell += '<xdr:to><xdr:col>'+toCol+'</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>'+toRow+'</xdr:row><xdr:rowOff>99999</xdr:rowOff></xdr:to>';
-			twoCell += '<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="'+(i+1)+'" name="'+image.name+'">'
-			twoCell += '</xdr:cNvPr><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>';
-			twoCell += '<xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId'+(i+1)+'"/>';
-			twoCell += '<a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/>';
+			var twoCell = '<xdr:from><xdr:col>'+fromCol+'</xdr:col><xdr:colOff>'+fromColOff+'</xdr:colOff><xdr:row>'+fromRow+'</xdr:row><xdr:rowOff>'+fromRowOff + '</xdr:rowOff></xdr:from>';
+			twoCell    += '<xdr:to><xdr:col>' + toCol+ '</xdr:col><xdr:colOff>'+toColOff+'</xdr:colOff><xdr:row>'+toRow+'</xdr:row><xdr:rowOff>'+toRowOff+'</xdr:rowOff></xdr:to>';
+			twoCell    += '<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="'+(i+1)+'" name="'+image.name+'">';
+			twoCell    += '</xdr:cNvPr><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>';
+			twoCell    += '<xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId'+(i+1)+'">';
+			twoCell    += '<a:extLst><a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}"><a14:useLocalDpi xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" val="0"/></a:ext></a:extLst></a:blip>';
+			twoCell    += '<a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr>';
+      if(!skipXFrm){
+        twoCell    += '<a:xfrm><a:off x="'+ image.spPr.xfrm.off.x + '" y= "'+  image.spPr.xfrm.off.y + '"/><a:ext cx="'+ image.spPr.xfrm.ext.cx+ '" cy="'+  image.spPr.xfrm.ext.cy + '"/></a:xfrm>';
+      }
+      twoCell    += '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/>';
 			o[o.length] = (writextag('xdr:twoCellAnchor', twoCell, images[i].attrs));
 		}
 	}
@@ -7990,7 +8002,9 @@ function write_ws_xml(idx, opts, wb) {
 
   if (ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
   var images = ws['!images'] || [];
- 	if (images.length) o[o.length] = '<drawing r:id="rId1"/>';
+  for (var i = 1; i <= images.length; ++i){
+    if (images.length) o[o.length] = '<drawing r:id="rId' + i + '"/>';
+  }
 
   if (ws['!pageSetup'] !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
   if (ws['!rowBreaks'] !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
