@@ -2546,12 +2546,14 @@ var DRAW_ROOT = writextag('xdr:wsDr', null, {
 });
 
 function write_drawing(images) {
+  console.log("entering write_drawing");
 	var o = [];
 	o[o.length] = (XML_HEADER);
 	o[o.length] = (DRAW_ROOT);
 
 	for (var i = 0; i < images.length; i++) {
 		var image = images[i];
+    console.log("spr: ", image.spPr);
 		var pos = image.position || {};
     var skipXFrm = !image.spPr;
 		if (pos.type === 'twoCellAnchor') {
@@ -8000,9 +8002,7 @@ function write_ws_xml(idx, opts, wb) {
 
   if (ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
   var images = ws['!images'] || [];
-  for (var i = 1; i <= images.length; ++i){
-    if (images.length) o[o.length] = '<drawing r:id="rId' + i + '"/>';
-  }
+  if (images.length) o[o.length] = '<drawing r:id="rId' + 1 + '"/>';
 
   if (ws['!pageSetup'] !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
   if (ws['!rowBreaks'] !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
