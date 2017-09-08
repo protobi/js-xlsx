@@ -2484,7 +2484,17 @@ function write_ct(ct, opts) {
 	f3('themes');
 	['strs', 'styles'].forEach(f1);
 	['coreprops', 'extprops', 'custprops'].forEach(f3);
+  
+  //TODO FIX THIS HACK
 	o[o.length] = '<Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing2.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing3.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing4.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing5.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing6.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing7.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing8.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing9.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
 	if(o.length>2){ o[o.length] = ('</Types>'); o[1]=o[1].replace("/>",">"); }
 	return o.join("");
 }
@@ -2520,7 +2530,7 @@ function parse_rels(data, currentFilePath) {
 	data.match(tagregex).forEach(function(x) {
 		var y = parsexmltag(x);
 		/* 9.3.2.2 OPC_Relationships */
-		if (y[0] === '<Relationship') {
+		if (y[0] === '<eelationship') {
 			var rel = {}; rel.Type = y.Type; rel.Target = y.Target; rel.Id = y.Id; rel.TargetMode = y.TargetMode;
 			var canonictarget = y.TargetMode === 'External' ? y.Target : resolveRelativePathIntoAbsolute(y.Target);
 			rels[canonictarget] = rel;
@@ -2546,7 +2556,6 @@ var DRAW_ROOT = writextag('xdr:wsDr', null, {
 });
 
 function write_drawing(images) {
-  console.log("entering write_drawing");
 	var o = [];
 	o[o.length] = (XML_HEADER);
 	o[o.length] = (DRAW_ROOT);
@@ -11849,7 +11858,7 @@ function write_zip(wb, opts) {
 			add_rels(draw_rels, sId, "../media/" + image.name, RELS.IMG);
 		}
 		zip.file("xl/drawings/drawing" + rId + "." + wbext, write_drawing(images));
-		add_rels(rels, rId, "../drawings/drawing" + rId + "." + wbext, RELS.DRAW);
+		add_rels(rels, 1, "../drawings/drawing" + rId + "." + wbext, RELS.DRAW);
 		zip.file("xl/drawings/_rels/drawing" + rId + "." + wbext + ".rels", write_rels(draw_rels));
 		zip.file("xl/worksheets/_rels/sheet" + rId + "." + wbext + '.rels', write_rels(rels));
 		f = "xl/worksheets/sheet" + rId + "." + wbext;
