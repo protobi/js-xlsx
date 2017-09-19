@@ -2495,6 +2495,37 @@ function write_ct(ct, opts) {
 	o[o.length] = '<Override PartName="/xl/drawings/drawing7.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
 	o[o.length] = '<Override PartName="/xl/drawings/drawing8.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
 	o[o.length] = '<Override PartName="/xl/drawings/drawing9.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing10.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing11.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing12.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing13.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing14.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing15.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing16.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing17.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing18.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing19.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing20.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing21.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing22.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing23.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing24.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing25.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing26.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing27.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing28.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing29.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing30.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing31.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing32.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing33.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing34.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing35.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing36.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing37.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing38.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing39.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing40.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
 	if(o.length>2){ o[o.length] = ('</Types>'); o[1]=o[1].replace("/>",">"); }
 	return o.join("");
 }
