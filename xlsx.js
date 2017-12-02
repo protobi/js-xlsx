@@ -7707,7 +7707,7 @@ function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
       vv = cell.v;
       break;
   }
-  var v = writetag('v', escapexml(vv)), o = {r: ref};
+  var v = (cell.v !== undefined) ? writetag('v', escapexml(vv)) : null, o = {r: ref};
   /* TODO: cell style */
   var os = get_cell_style(opts.cellXfs, cell, opts);
   if (os !== 0) o.s = os;
@@ -7725,7 +7725,7 @@ function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
       break;
     default:
       if (opts.bookSST) {
-        v = writetag('v', '' + get_sst_id(opts.Strings, cell.v));
+        v = cell.v !== undefined ? writetag('v', '' + get_sst_id(opts.Strings, cell.v)) : null;
         o.t = "s";
         break;
       }
@@ -7796,54 +7796,58 @@ var parse_ws_xml_data = (function parse_ws_xml_data_factory() {
         if (opts.cellFormula && (cref = d.match(match_f)) !== null) p.f = unescapexml(cref[1]);
 
         /* SCHEMA IS ACTUALLY INCORRECT HERE.  IF A CELL HAS NO T, EMIT "" */
-        if (tag.t === undefined && tag.s === undefined && p.v === undefined) {
+        if (tag.t === undefined && tag.s === undefined) {
           if (!opts.sheetStubs) continue;
           p.t = "stub";
         }
         else p.t = tag.t || "n";
         if (guess.s.c > idx) guess.s.c = idx;
         if (guess.e.c < idx) guess.e.c = idx;
+
         /* 18.18.11 t ST_CellType */
-        switch (p.t) {
-          case 'n':
-            p.v = parseFloat(p.v);
-            if (isNaN(p.v)) p.v = "" // we don't want NaN if p.v is null
-            break;
-          case 's':
-            // if (!p.hasOwnProperty('v')) continue;
-            sstr = strs[parseInt(p.v, 10)];
-            p.v = sstr.t;
-            p.r = sstr.r;
-            if (opts.cellHTML) p.h = sstr.h;
-            break;
-          case 'str':
-            p.t = "s";
-            p.v = (p.v != null) ? utf8read(p.v) : '';
-            if (opts.cellHTML) p.h = p.v;
-            break;
-          case 'inlineStr':
-            cref = d.match(isregex);
-            p.t = 's';
-            if (cref !== null) {
-              sstr = parse_si(cref[1]);
+        if (p.v !== undefined) {
+          switch (p.t) {
+            case 'n':
+              p.v = parseFloat(p.v);
+              if (isNaN(p.v)) p.v = "" // we don't want NaN if p.v is null
+              break;
+            case 's':
+              // if (!p.hasOwnProperty('v')) continue;
+              sstr = strs[parseInt(p.v, 10)];
               p.v = sstr.t;
-            } else p.v = "";
-            break; // inline string
-          case 'b':
-            p.v = parsexmlbool(p.v);
-            break;
-          case 'd':
-            if (!opts.cellDates) {
-              p.v = datenum(p.v);
-              p.t = 'n';
-            }
-            break;
-            /* error string in .v, number in .v */
-          case 'e':
-            p.w = p.v;
-            p.v = RBErr[p.v];
-            break;
+              p.r = sstr.r;
+              if (opts.cellHTML) p.h = sstr.h;
+              break;
+            case 'str':
+              p.t = "s";
+              p.v = (p.v != null) ? utf8read(p.v) : '';
+              if (opts.cellHTML) p.h = p.v;
+              break;
+            case 'inlineStr':
+              cref = d.match(isregex);
+              p.t = 's';
+              if (cref !== null) {
+                sstr = parse_si(cref[1]);
+                p.v = sstr.t;
+              } else p.v = "";
+              break; // inline string
+            case 'b':
+              p.v = parsexmlbool(p.v);
+              break;
+            case 'd':
+              if (!opts.cellDates) {
+                p.v = datenum(p.v);
+                p.t = 'n';
+              }
+              break;
+              /* error string in .v, number in .v */
+            case 'e':
+              p.w = p.v;
+              p.v = RBErr[p.v];
+              break;
+          }
         }
+
         /* formatting */
         fmtid = fillid = 0;
         if (do_format && tag.s !== undefined) {
