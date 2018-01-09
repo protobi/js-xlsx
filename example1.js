@@ -9,6 +9,8 @@ var sheetName = 'test &amp; debug';
       }
   };
 
+  var testFailure = 1/0
+
   var Workbook = function(){
       this.SheetNames = [];
       this.Sheets = {};
