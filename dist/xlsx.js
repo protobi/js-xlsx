@@ -1332,7 +1332,6 @@ function getzipdata(zip, file, safe) {
 }
 
 var _fs, jszip;
-if(typeof JSZip !== 'undefined') jszip = JSZip;
 if (typeof exports !== 'undefined') {
 	if (typeof module !== 'undefined' && module.exports) {
 		if(has_buf && typeof jszip === 'undefined') jszip = require('js'+'zip');
@@ -7669,7 +7668,7 @@ function write_ws_xml_cols(ws, cols) {
 }
 
 function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
-	if(cell.v === undefined && cell.s === undefined) return "";
+	if(cell.v === undefined && cell.s === undefined && (!cell.f)) return "";
 	var vv = "";
 	var oldt = cell.t, oldv = cell.v;
 	switch(cell.t) {
@@ -7686,7 +7685,7 @@ function write_ws_xml_cell(cell, ref, ws, opts, idx, wb) {
 			break;
 		default: vv = cell.v; break;
 	}
-	var v = writetag('v', escapexml(vv)), o = {r:ref};
+	var v = (cell.f ? writetag('f', escapexml(cell.f)) : writetag('v', escapexml(vv))), o = {r:ref};
 	/* TODO: cell style */
 	var os = get_cell_style(opts.cellXfs, cell, opts);
 	if(os !== 0) o.s = os;
