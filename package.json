@@ -3,26 +3,39 @@
 	"version": "0.8.3",
 	"author": "sheetjs",
 	"description": "Excel (XLSB/XLSX/XLSM/XLS/XML) and ODS spreadsheet parser and writer",
-	"keywords": [ "excel", "xls", "xlsx", "xlsb", "xlsm", "ods", "office", "spreadsheet" ],
+	"keywords": [
+		"excel",
+		"xls",
+		"xlsx",
+		"xlsb",
+		"xlsm",
+		"ods",
+		"office",
+		"spreadsheet"
+	],
 	"bin": {
 		"xlsx": "./bin/xlsx.njs"
 	},
 	"main": "./xlsx",
 	"dependencies": {
-		"exit-on-epipe":"",
-		"ssf":"~0.8.1",
-		"codepage":"",
-		"cfb":">=0.10.0",
-		"crc-32":"",
-		"adler-32":"",
-		"commander":""
+		"adler-32": "",
+		"cfb": ">=0.10.0",
+		"codepage": "",
+		"commander": "",
+		"crc-32": "",
+		"exit-on-epipe": "",
+		"mocha": "^5.2.0",
+		"ssf": "~0.8.1"
 	},
 	"devDependencies": {
-		"mocha":"",
-		"xlsjs":"",
-		"uglify-js":""
+		"mocha": "",
+		"xlsjs": "",
+		"uglify-js": ""
 	},
-	"repository": { "type":"git", "url":"git://github.com/SheetJS/js-xlsx.git" },
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/SheetJS/js-xlsx.git"
+	},
 	"scripts": {
 		"pretest": "git submodule init && git submodule update",
 		"test": "make test"
@@ -33,7 +46,11 @@
 		}
 	},
 	"homepage": "https://oss.sheetjs.com/js-xlsx/",
-	"bugs": { "url": "https://github.com/SheetJS/js-xlsx/issues" },
+	"bugs": {
+		"url": "https://github.com/SheetJS/js-xlsx/issues"
+	},
 	"license": "Apache-2.0",
-	"engines": { "node": ">=0.8" }
+	"engines": {
+		"node": ">=0.8"
+	}
 }

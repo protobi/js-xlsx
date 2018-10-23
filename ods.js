@@ -9,8 +9,7 @@ var get_utils = function() {
 	if(typeof module !== "undefined" && typeof require !== 'undefined') try {
 		return require('../' + 'xlsx').utils;
 	} catch(e) {
-		try { return require('./' + 'xlsx').utils; }
-		catch(ee) { return require('xl' + 'sx').utils; }
+		return require('./' + 'xlsx').utils;
 	}
 	throw new Error("Cannot find XLSX utils");
 };

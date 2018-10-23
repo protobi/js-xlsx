@@ -1,9 +1,9 @@
-SystemJS-XLSX
+Angular CLI-XLSX
 
-Modified to work with Angular 2 project with SystemJS loader.
+Modified to work with Angular 2 project with Angular CLI loader.
 
-CommonJS /SystemJS dont have support to require() , modified to user System.import instead of require("Some_Module")
+CommonJS /Angular CLI dont have support to require() , modified to user System.import instead of require("Some_Module")
 
-Purely based on SheetJS/xlsx
+Purely based on xlsx-style
 
-https://github.com/SheetJS/js-xlsx/
+https://github.com/protobi/js-xlsx/tree/beta
