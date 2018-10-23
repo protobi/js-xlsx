@@ -1,0 +1,1 @@
+The clone contains couple of changes to fix the compiler errors with Angular CLI
