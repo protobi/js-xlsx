@@ -92,11 +92,11 @@ dist: dist-deps $(TARGET) bower.json
 	cp $(TARGET) dist/
 	cp LICENSE dist/
 	uglifyjs $(TARGET) -o dist/$(LIB).min.js --source-map dist/$(LIB).min.map --preamble "$$(head -n 1 bits/00_header.js)"
-	misc/strip_sourcemap.sh dist/$(LIB).min.js
+	sed -i '/sourceMappingURL/d' dist/$(LIB).min.js
 	uglifyjs $(REQS) $(TARGET) -o dist/$(LIB).core.min.js --source-map dist/$(LIB).core.min.map --preamble "$$(head -n 1 bits/00_header.js)"
-	misc/strip_sourcemap.sh dist/$(LIB).core.min.js
+	sed -i '/sourceMappingURL/d' dist/$(LIB).core.min.js
 	uglifyjs $(REQS) $(ADDONS) $(TARGET) -o dist/$(LIB).full.min.js --source-map dist/$(LIB).full.min.map --preamble "$$(head -n 1 bits/00_header.js)"
-	misc/strip_sourcemap.sh dist/$(LIB).full.min.js
+	sed -i '/sourceMappingURL/d' dist/$(LIB).full.min.js
 
 .PHONY: aux
 aux: $(AUXTARGETS)
