@@ -1255,7 +1255,7 @@ return exports;
 if(typeof require !== 'undefined' && typeof module !== 'undefined' && typeof DO_NOT_EXPORT_CFB === 'undefined') { module.exports = CFB; }
 function isval(x) { return x !== undefined && x !== null; }
 
-function keys(o) { return Object.keys(o); }
+function keys(o) { return o != null ? Object.keys(o) : []; }
 
 function evert_key(obj, key) {
 	var o = [], K = keys(obj);
@@ -2441,6 +2441,8 @@ var CTYPE_XML_ROOT = writextag('Types', null, {
 
 var CTYPE_DEFAULTS = [
 	['xml', 'application/xml'],
+	['png', 'image/png'],
+	['jpg', 'image/jpeg'],
 	['bin', 'application/vnd.ms-excel.sheet.binary.macroEnabled.main'],
 	['rels', type2ct.rels[0]]
 ].map(function(x) {
@@ -2482,6 +2484,48 @@ function write_ct(ct, opts) {
 	f3('themes');
 	['strs', 'styles'].forEach(f1);
 	['coreprops', 'extprops', 'custprops'].forEach(f3);
+  
+  //TODO FIX THIS HACK
+	o[o.length] = '<Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing2.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing3.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing4.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing5.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing6.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing7.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing8.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing9.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing10.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing11.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing12.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing13.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing14.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing15.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing16.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing17.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing18.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing19.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing20.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing21.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing22.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing23.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing24.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing25.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing26.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing27.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing28.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing29.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing30.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing31.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing32.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing33.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing34.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing35.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing36.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing37.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing38.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing39.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
+	o[o.length] = '<Override PartName="/xl/drawings/drawing40.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>';
 	if(o.length>2){ o[o.length] = ('</Types>'); o[1]=o[1].replace("/>",">"); }
 	return o.join("");
 }
@@ -2517,7 +2561,7 @@ function parse_rels(data, currentFilePath) {
 	data.match(tagregex).forEach(function(x) {
 		var y = parsexmltag(x);
 		/* 9.3.2.2 OPC_Relationships */
-		if (y[0] === '<Relationship') {
+		if (y[0] === '<eelationship') {
 			var rel = {}; rel.Type = y.Type; rel.Target = y.Target; rel.Id = y.Id; rel.TargetMode = y.TargetMode;
 			var canonictarget = y.TargetMode === 'External' ? y.Target : resolveRelativePathIntoAbsolute(y.Target);
 			rels[canonictarget] = rel;
@@ -2535,6 +2579,50 @@ var RELS_ROOT = writextag('Relationships', null, {
 	'xmlns': XMLNS.RELS
 });
 
+var DRAW_ROOT = writextag('xdr:wsDr', null, {
+	'xmlns:xdr': 'http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing',
+	'xmlns:a': 'http://schemas.openxmlformats.org/drawingml/2006/main'
+	//'xmlns:ns0': XMLNS.RELS,
+	// 'xmlns': XMLNS.RELS
+});
+
+function write_drawing(images) {
+	var o = [];
+	o[o.length] = (XML_HEADER);
+	o[o.length] = (DRAW_ROOT);
+
+	for (var i = 0; i < images.length; i++) {
+		var image = images[i];
+    console.log("spr: ", image.spPr);
+		var pos = image.position || {};
+    var skipXFrm = !image.spPr;
+		if (pos.type === 'twoCellAnchor') {
+			var from = pos.from || {}, to = pos.to || {},
+			    fromCol = from.col || 0, toCol = to.col || 0,
+			    fromRow = from.row || 0, toRow = to.row || 0,
+          fromColOff  = from.colOff || 0,
+          fromRowOff  = from.rowOff || 0,
+          toColOff    = to.colOff   || 0,
+          toRowOff    = to.rowOff   || 99999;
+
+			var twoCell = '<xdr:from><xdr:col>'+fromCol+'</xdr:col><xdr:colOff>'+fromColOff+'</xdr:colOff><xdr:row>'+fromRow+'</xdr:row><xdr:rowOff>'+fromRowOff + '</xdr:rowOff></xdr:from>';
+			twoCell    += '<xdr:to><xdr:col>' + toCol+ '</xdr:col><xdr:colOff>'+toColOff+'</xdr:colOff><xdr:row>'+toRow+'</xdr:row><xdr:rowOff>'+toRowOff+'</xdr:rowOff></xdr:to>';
+			twoCell    += '<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="'+(i+1)+'" name="'+image.name+'">';
+			twoCell    += '</xdr:cNvPr><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>';
+			twoCell    += '<xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId'+(i+1)+'">';
+			twoCell    += '<a:extLst><a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}"><a14:useLocalDpi xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" val="0"/></a:ext></a:extLst></a:blip>';
+			twoCell    += '<a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr>';
+      if(!skipXFrm){
+        twoCell    += '<a:xfrm><a:off x="'+ image.spPr.xfrm.off.x + '" y= "'+  image.spPr.xfrm.off.y + '"/><a:ext cx="'+ image.spPr.xfrm.ext.cx+ '" cy="'+  image.spPr.xfrm.ext.cy + '"/></a:xfrm>';
+      }
+      twoCell    += '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/>';
+			o[o.length] = (writextag('xdr:twoCellAnchor', twoCell, images[i].attrs));
+		}
+	}
+
+	if(o.length>2){ o[o.length] = ('</xdr:wsDr>'); o[1]=o[1].replace("/>",">"); }
+	return o.join("");
+}
 /* TODO */
 function write_rels(rels) {
 	var o = [];
@@ -4615,6 +4703,7 @@ function rgb_tint(hex, tint) {
 var DEF_MDW = 7, MAX_MDW = 15, MIN_MDW = 1, MDW = DEF_MDW;
 function width2px(width) { return (( width + ((128/MDW)|0)/256 )* MDW )|0; }
 function px2char(px) { return (((px - 5)/MDW * 100 + 0.5)|0)/100; }
+function px2pt(px) { return px * 72 / 96; }
 function char2width(chr) { return (((chr * MDW + 5)/MDW*256)|0)/256; }
 function cycle_width(collw) { return char2width(px2char(width2px(collw))); }
 function find_mdw(collw, coll) {
@@ -7864,19 +7953,31 @@ var parse_ws_xml_data = (function parse_ws_xml_data_factory() {
 })();
 
 function write_ws_xml_data(ws, opts, idx, wb) {
-  var o = [], r = [], range = safe_decode_range(ws['!ref']), cell, ref, rr = "", cols = [], R, C;
-  for (C = range.s.c; C <= range.e.c; ++C) cols[C] = encode_col(C);
-  for (R = range.s.r; R <= range.e.r; ++R) {
-    r = [];
-    rr = encode_row(R);
-    for (C = range.s.c; C <= range.e.c; ++C) {
-      ref = cols[C] + rr;
-      if (ws[ref] === undefined) continue;
-      if ((cell = write_ws_xml_cell(ws[ref], ref, ws, opts, idx, wb)) != null) r.push(cell);
+	var o = [], r = [], range = safe_decode_range(ws['!ref']), cell, ref, rr = "", cols = [], R, C;
+	for(C = range.s.c; C <= range.e.c; ++C) cols[C] = encode_col(C);
+	for(R = range.s.r; R <= range.e.r; ++R) {
+		r = [];
+		rr = encode_row(R);
+		for(C = range.s.c; C <= range.e.c; ++C) {
+			ref = cols[C] + rr;
+			if(ws[ref] === undefined) continue;
+			if((cell = write_ws_xml_cell(ws[ref], ref, ws, opts, idx, wb)) != null) r.push(cell);
+		}
+        if(r.length > 0) {
+            // 18.3.1.73 row
+            var params = {r:rr};
+            if(typeof ws['!rows'] !== 'undefined' && ws['!rows'].length > R) {
+                var row = ws['!rows'][R];
+                if (row.hidden) params.hidden = 1;
+                var height = -1;
+                if (row.hpx) height = px2pt(row.hpx);
+                else if (row.hpt) height = row.hpt;
+                if (height > -1) { params.ht = height; params.customHeight = 1; }
+            };
+            o[o.length] = (writextag('row', r.join(""), params));
+        }
     }
-    if (r.length > 0) o[o.length] = (writextag('row', r.join(""), {r: rr}));
-  }
-  return o.join("");
+	return o.join("");
 }
 
 var WS_XML_ROOT = writextag('worksheet', null, {
@@ -7885,6 +7986,7 @@ var WS_XML_ROOT = writextag('worksheet', null, {
 });
 
 function write_ws_xml(idx, opts, wb) {
+
   var o = [XML_HEADER, WS_XML_ROOT];
   var s = wb.SheetNames[idx], sidx = 0, rdata = "";
   var ws = wb.Sheets[s];
@@ -7939,6 +8041,8 @@ function write_ws_xml(idx, opts, wb) {
   }
 
   if (ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
+  var images = ws['!images'] || [];
+  if (images.length) o[o.length] = '<drawing r:id="rId' + 1 + '"/>';
 
   if (ws['!pageSetup'] !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
   if (ws['!rowBreaks'] !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
@@ -11725,6 +11829,9 @@ function add_rels(rels, rId, f, type, relobj) {
 	rels[('/' + relobj.Target).replace("//","/")] = relobj;
 }
 
+RELS.IMG = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+RELS.DRAW = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing";
+
 function write_zip(wb, opts) {
 	if(wb && !wb.SSF) {
 		wb.SSF = SSF.get_table();
@@ -11772,6 +11879,19 @@ function write_zip(wb, opts) {
 	add_rels(opts.rels, 1, f, RELS.WB);
 
 	for(rId=1;rId <= wb.SheetNames.length; ++rId) {
+		var s = wb.SheetNames[rId-1], ws = wb.Sheets[s],
+		    images = ws['!images'] || [];
+		var rels = ws['!rels'] = [], draw_rels = [];
+		for (var sId=1; sId < images.length+1; ++sId) {
+			var image = images[sId - 1];
+			f = 'xl/media/' + image.name;
+			zip.file(f, image.data, image.opts);
+			add_rels(draw_rels, sId, "../media/" + image.name, RELS.IMG);
+		}
+		zip.file("xl/drawings/drawing" + rId + "." + wbext, write_drawing(images));
+		add_rels(rels, 1, "../drawings/drawing" + rId + "." + wbext, RELS.DRAW);
+		zip.file("xl/drawings/_rels/drawing" + rId + "." + wbext + ".rels", write_rels(draw_rels));
+		zip.file("xl/worksheets/_rels/sheet" + rId + "." + wbext + '.rels', write_rels(rels));
 		f = "xl/worksheets/sheet" + rId + "." + wbext;
 		zip.file(f, write_ws(rId-1, f, opts, wb));
 		ct.sheets.push(f);
