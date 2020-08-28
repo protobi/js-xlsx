@@ -9,11 +9,13 @@ var sheetName = 'test &amp; debug';
       }
   };
 
+  var testFailure = 1/0
+
   var Workbook = function(){
       this.SheetNames = [];
       this.Sheets = {};
   };
-
+  let aaa = 1+1
   var range = {s: {c:10000000, r:10000000}, e:{c:0, r:0}};
 
   function updateRange(row, col) {
