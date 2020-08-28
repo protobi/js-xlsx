@@ -1,8 +1,8 @@
 {
-	"name": "xlsx",
-	"version": "0.8.20",
+	"name": "itt-xlsx",
+	"version": "0.1.0",
 	"author": "sheetjs",
-	"description": "Excel (XLSB/XLSX/XLSM/XLS/XML) and ODS spreadsheet parser and writer (extended to enable read/write of cell formats with xlsx files)",
+	"description": "A fork of xlsx-style with formula. Excel (XLSB/XLSX/XLSM/XLS/XML) and ODS spreadsheet parser and writer (extended to enable read/write of cell formats with xlsx files)",
 	"keywords": [ "excel", "xls", "xlsx", "xlsb", "xlsm", "ods", "office", "spreadsheet" ],
 	"bin": {
 		"xlsx": "./bin/xlsx.njs"
@@ -23,7 +23,7 @@
 		"xlsjs":"",
 		"uglify-js":""
 	},
-	"repository": { "type":"git", "url":"git://github.com/protobi/js-xlsx.git#beta" },
+	"repository": { "type":"git", "url":"https://github.com/InTimeTecGitHub/js-xlsx.git" },
 	"scripts": {
 		"pretest": "git submodule init && git submodule update",
 		"test": "make test"
