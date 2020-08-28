@@ -4,7 +4,7 @@
 /*jshint funcscope:true, eqnull:true */
 var XLSX = {};
 (function make_xlsx(XLSX){
-XLSX.version = '0.8.20';
+XLSX.version = '0.8.17';
 var current_codepage = 1200, current_cptable;
 if(typeof module !== "undefined" && typeof require !== 'undefined') {
 	if(typeof cptable === 'undefined') cptable = require('./dist/cpexcel');
@@ -4732,11 +4732,6 @@ function parse_fonts(t, opts) {
         break;
       case '<font':
         break;
-      case '<font/>':
-	      styles.Fonts.push(font);
-		    ;
-	      font = {};
-		    break;
       case '</font>':
         styles.Fonts.push(font);
         ;
@@ -7550,7 +7545,6 @@ var sheetdataregex = /<(?:\w+:)?sheetData>([^\u2603]*)<\/(?:\w+:)?sheetData>/;
 var hlinkregex = /<hyperlink[^>]*\/>/g;
 var dimregex = /"(\w*:\w*)"/;
 var colregex = /<col[^>]*\/>/g;
-var freezeregex = /<pane[^>]*\/>/g;
 /* 18.3 Worksheets */
 function parse_ws_xml(data, opts, rels) {
   if (!data) return data;
@@ -7570,13 +7564,6 @@ function parse_ws_xml(data, opts, rels) {
     var merges = data.match(mergecregex);
     for (ridx = 0; ridx != merges.length; ++ridx)
       mergecells[ridx] = safe_decode_range(merges[ridx].substr(merges[ridx].indexOf("\"") + 1));
-  }
-
-  if (opts.cellStyles && data.indexOf("</sheetView>") !== -1) {
-	var paneData = data.match(freezeregex);
-	if (paneData){
-	  var freezeData = parse_ws_xml_pane(paneData);
-	}
   }
 
   /* 18.3.1.17 cols CT_Cols */
@@ -7611,7 +7598,6 @@ function parse_ws_xml(data, opts, rels) {
   }
   if (mergecells.length > 0) s["!merges"] = mergecells;
   if (columns.length > 0) s["!cols"] = columns;
-  if (freezeData) s["!freeze"] = freezeData;
   return s;
 }
 
@@ -7654,11 +7640,6 @@ function parse_ws_xml_hlinks(s, data, rels) {
       s[addr].l = val;
     }
   }
-}
-
-function parse_ws_xml_pane( paneData) {
-  var fD = parsexmltag(paneData[0], true);
-  return fD;
 }
 
 function parse_ws_xml_cols(columns, cols) {
@@ -8683,19 +8664,11 @@ function write_wb_xml(wb, opts) {
     for(var i = 0; i != wb.SheetNames.length; ++i) {
       var sheetName = wb.SheetNames[i];
       var sheet = wb.Sheets[sheetName]
-      if (sheet['!printHeader'] || sheet['!printColumns']) {
+      if (sheet['!printHeader']) {
           var printHeader = sheet['!printHeader'];
-          var printColumns = sheet['!printColumns'];
 
-        //Sheet1!$A:$C,Sheet1!$1:$1
-        var range = "";
+        var range = "'" + sheetName + "'!$" + printHeader[0] + ":$" + printHeader[1];
 
-        if (printColumns)  range += ("'" + sheetName + "'!")  + ("$" + printColumns[0] + ":$" + printColumns[1]);
-        if (printColumns && printHeader)  range += ","
-        if (printHeader) range += ("'" + sheetName + "'!" ) +  ("$" + printHeader[0] + ":$" + printHeader[1]);
-
-        console.log("-----------------------------")
-        console.log(range)
         o[o.length] = (writextag('definedName', range, {
           "name":"_xlnm.Print_Titles",
           localSheetId : ''+i
