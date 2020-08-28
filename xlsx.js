@@ -12359,6 +12359,10 @@ var XmlNode = (function () {
             .attr("borderId", borderId)
             .attr("xfId", "0");
 
+        if (attributes.quotePrefix > 0) {
+            $xf.attr("quotePrefix", "1");
+        }
+
         if (fontId > 0) {
           $xf.attr('applyFont', "1");
         }
