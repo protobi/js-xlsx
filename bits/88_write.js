@@ -3,13 +3,18 @@ function write_zip_type(wb, opts) {
   style_builder  = new StyleBuilder(opts);
 
   var z = write_zip(wb, o);
+    var oopts = {};
+    if(o.compression) oopts.compression = 'DEFLATE';
 	switch(o.type) {
-		case "base64": return z.generate({type:"base64"});
-		case "binary": return z.generate({type:"string"});
-		case "buffer": return z.generate({type:"nodebuffer"});
-		case "file": return _fs.writeFileSync(o.file, z.generate({type:"nodebuffer"}));
+		case "base64": oopts.type = "base64"; break;
+		case "binary": oopts.type = "string"; break;
+		case "buffer":
+		case "file": oopts.type = "nodebuffer"; break;
 		default: throw new Error("Unrecognized type " + o.type);
 	}
+    var out = z.generate(oopts);
+    if(o.type === "file") return _fs.writeFileSync(o.file, out);
+    return out;
 }
 
 function writeSync(wb, opts) {
