@@ -7558,6 +7558,11 @@ function parse_ws_xml(data, opts, rels) {
     if (ref != null) parse_ws_xml_dim(s, ref[1]);
   }
 
+	/* 18.3.1.2  autoFilter CT_AutoFilter */
+	var afregex = /<(?:\w:)?autoFilter[^>]*([\/]|>([\s\S]*)<\/(?:\w:)?autoFilter)>/g;
+	var afilter = data.match(afregex);
+	if(afilter) s['!autofilter'] = parse_ws_xml_autofilter(afilter[0]);
+
   /* 18.3.1.55 mergeCells CT_MergeCells */
   var mergecells = [];
   if (data.indexOf("</mergeCells>") !== -1) {
@@ -7943,6 +7948,7 @@ function write_ws_xml(idx, opts, wb) {
   if (ws['!pageSetup'] !== undefined) o[o.length] = write_ws_xml_pagesetup(ws['!pageSetup']);
   if (ws['!rowBreaks'] !== undefined) o[o.length] = write_ws_xml_row_breaks(ws['!rowBreaks']);
   if (ws['!colBreaks'] !== undefined) o[o.length] = write_ws_xml_col_breaks(ws['!colBreaks']);
+  if (ws['!autofilter'] !== undefined) o[o.length] = write_ws_xml_autofilter(ws['!autofilter']);
 
   if (o.length > 2) {
     o[o.length] = ('</worksheet>');
@@ -7968,6 +7974,13 @@ function write_ws_xml_col_breaks(breaks) {
     brk.push(writextag('brk', null, {id: thisBreak, max: nextBreak, man: '1'}))
   }
   return writextag('colBreaks', brk.join(' '), {count: brk.length, manualBreakCount: brk.length})
+}
+	function parse_ws_xml_autofilter(data) {
+		var o = { ref: (data.match(/ref="([^"]*)"/)||[])[1]};
+		return o;
+	}
+function write_ws_xml_autofilter(data) {
+	return writextag('autoFilter', null, {ref:data.ref});
 }
 
 /* [MS-XLSB] 2.4.718 BrtRowHdr */
